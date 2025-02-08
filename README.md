@@ -32,7 +32,7 @@ Your support is crucial for maintaining and improving this open-source project. 
 ### Prerequisites
 
 - Node.js (version x.x.x or higher)
-- A MongoDB database for backend storage (optional)
+- 1gb ram 2vcpu
 
 ### Steps
 
@@ -50,12 +50,8 @@ Run the Server:
 sh
 npm start
 
-Documentation
-API Documentation (docs/api.md)
-Integration Guide (docs/integration.md)
-Contribution Guidelines (CONTRIBUTING.md)
 
-Contributing
+## Contributing
 We welcome contributions! Here’s how you can contribute:
 
 Report bugs or suggest features by opening an issue.
@@ -63,10 +59,10 @@ Improve documentation or write code by forking the project and submitting a pull
 
 Please read our Contribution Guidelines (CONTRIBUTING.md) before making changes.
 
-License
+## License
 Wildberry is licensed under the MIT License (LICENSE).
 
-Acknowledgements
+## Acknowledgements
 Inspired by the need for freedom in app monetization.
 Thanks to the open-source community for their invaluable contributions to software freedom.
 
