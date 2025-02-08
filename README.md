@@ -1,7 +1,9 @@
 Join our Discord community:  
 <a href="https://discord.gg/7vCkqfyn"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a> 
 
-# Wildberry
+# Project Wildberry
+
+<img src="https://i.imgur.com/Hdt9TXr.png">
 
 **Wildberry** is an open-source, privacy-focused alternative to RevenueCat with zero vendor lock-in for in-app purchases and subscriptions management. 
 
