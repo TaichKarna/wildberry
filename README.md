@@ -1,41 +1,36 @@
-# Wildberry
 
-**Wildberry** is an open-source, privacy-focused alternative to RevenueCat with zero vendor lock-in for in-app purchases and subscriptions management. 
+Wildberry is an open-source, privacy-focused alternative to RevenueCat with zero vendor lock-in for in-app purchases and subscriptions management. 
 
-## Features
+Join our Discord community:  
+<img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /> Discord - Wildberry
 
-- **No Vendor Lock-in**: Take control of your data and your business.
-- **Privacy First**: We respect user privacy with no data sharing or tracking.
-- **Flexible Integration**: Easy to integrate with various platforms and payment gateways.
-- **Open Source**: Transparency and community contributions are welcome.
+Features
+No Vendor Lock-in: Take control of your data and your business.
+Privacy First: We respect user privacy with no data sharing or tracking.
+Flexible Integration: Easy to integrate with various platforms and payment gateways.
+Open Source: Transparency and community contributions are welcome.
 
-## Why Wildberry?
+Why Wildberry?
+Freedom: Escape from the constraints of proprietary systems.
+Cost-Effective: Reduce your expenses by leveraging community-driven development.
+Customizability: Tailor the system to your exact needs without waiting on a third-party.
 
-- **Freedom**: Escape from the constraints of proprietary systems.
-- **Cost-Effective**: Reduce your expenses by leveraging community-driven development.
-- **Customizability**: Tailor the system to your exact needs without waiting on a third-party.
-
-## Support Wildberry
-
-**Support Wildberry's Growth:**  
+Support Wildberry
+Support Wildberry's Growth:
 <a href="https://buymeacoffee.com/rcopensource"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=rcopensource&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"></a>
 
 Your support is crucial for maintaining and improving this open-source project. Every contribution helps!
 
-## Installation
+Installation
+Prerequisites
+Node.js (version x.x.x or higher)
+A MongoDB database for backend storage (optional)
 
-### Prerequisites
-
-- Node.js (version x.x.x or higher)
-- A MongoDB database for backend storage (optional)
-
-### Steps
-
-1. **Clone the Repository**:
-   ```sh
-   git clone https://github.com/yourusername/wildberry.git
-   cd wildberry
-
+Steps
+Clone the Repository:
+sh
+git clone https://github.com/yourusername/wildberry.git
+cd wildberry
 Install Dependencies:
 sh
 npm install
@@ -46,9 +41,9 @@ sh
 npm start
 
 Documentation
-API Documentation (docs/api.md)
-Integration Guide (docs/integration.md)
-Contribution Guidelines (CONTRIBUTING.md)
+API Documentation: (docs/api.md)
+Integration Guide: (docs/integration.md)
+Contribution Guidelines: (CONTRIBUTING.md)
 
 Contributing
 We welcome contributions! Here’s how you can contribute:
