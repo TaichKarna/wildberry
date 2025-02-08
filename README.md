@@ -22,6 +22,9 @@
 
 Your support is crucial for maintaining and improving this open-source project. Every contribution helps!
 
+Join our Discord community:  
+<a href="https://discord.gg/7vCkqfyn"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a>
+
 ## Installation
 
 ### Prerequisites
