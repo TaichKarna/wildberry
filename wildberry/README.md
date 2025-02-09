@@ -5,7 +5,7 @@ Join our Discord community:
 
 <img src="https://i.imgur.com/Hdt9TXr.png">
 
-**Wildberry** is an open-source, privacy-focused alternative to RevenueCat with zero vendor lock-in for in-app purchases and subscriptions management. 
+**Wildberry** is an open-source, privacy-focused alternative to wildberry with zero vendor lock-in for in-app purchases and subscriptions management. 
 
 ## Features
 
