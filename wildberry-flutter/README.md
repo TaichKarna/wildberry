@@ -1,5 +1,4 @@
-<p align="center">
-  <img src="https://uploads-ssl.webflow.com/5e2613cf294dc30503dcefb7/5e752025f8c3a31d56a51408_logo_red%20(1).svg" width="350" alt="wildberry"/>
+
 <br>
   
 [![pub package](https://img.shields.io/pub/v/wildberry_flutter.svg)](https://pub.dartlang.org/packages/wildberry_flutter)
