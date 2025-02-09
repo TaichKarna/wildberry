@@ -1,7 +1,4 @@
 
-Here's an improved version of your README.md for clarity, structure, and consistency:
-
-markdown
 # Express.js TypeScript Server
 
 This document is aimed at developers contributing to or maintaining the server setup for handling product and customer interactions.
