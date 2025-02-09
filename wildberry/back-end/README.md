@@ -23,11 +23,7 @@ To get started:
 2. **Install dependencies**:
 
    ```bash
-   [npm install](https://x.com/i/grok?text=npm%20install)
-   Or if you prefer Yarn:
-
-bash
-yarn install
+   npm install
 
 ##TypeScript Configuration:
 Ensure you have a tsconfig.json file with settings like:
