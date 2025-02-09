@@ -40,18 +40,21 @@ Your support is crucial for maintaining and improving this open-source project. 
    ```sh
    git clone https://github.com/yourusername/wildberry.git
    cd wildberry
+   ```
 
 2. **Install Dependencies**:
    ```sh
    npm install
+   ```
    
-3.Configure Your Environment:
+3. **Configure Your Environment**:
 Copy .env.example to .env and update the variables according to your setup.
 
-4.**Run the Server**:
+4. **Run the Server**:
    ```sh
-      npm start
-```
+   npm start
+   ```
+
 ## Contributing
 We welcome contributions! Here’s how you can contribute:
 
