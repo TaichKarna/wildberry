@@ -22,10 +22,6 @@ Join our Discord community:
 
 ## Support Wildberry
 
-**Support Wildberry's Growth:**  
-<a href="https://buymeacoffee.com/rcopensource"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=rcopensource&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"></a>
-
-Your support is crucial for maintaining and improving this open-source project. Every contribution helps!
 
 ## Installation
 
