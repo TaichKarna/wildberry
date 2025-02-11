@@ -20,9 +20,6 @@ Join our Discord community:
 - **Cost-Effective**: Reduce your expenses by leveraging community-driven development.
 - **Customizability**: Tailor the system to your exact needs without waiting on a third-party.
 
-## Support Wildberry
-
-
 ## Installation
 
 ### Prerequisites
