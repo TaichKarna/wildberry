@@ -1,6 +1,8 @@
-import { Metadata } from "next"
+'use client';
+
 import Image from "next/image"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,24 +14,51 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-export const metadata: Metadata = {
-  title: "Login - Wildberry Admin",
-  description: "Login to your account",
-}
+import { useToast } from "@/hooks/use-toast"
 
 export default function LoginPage() {
-  async function onSubmit(formData: FormData) {
-    "use server"
-    
-    const username = formData.get("username")
-    const password = formData.get("password")
-    
-    if (
-      username === process.env.ADMIN_USERNAME &&
-      password === process.env.ADMIN_PASSWORD
-    ) {
-      redirect("/dashboard")
+  const router = useRouter()
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setIsLoading(true)
+
+    const formData = new FormData(event.currentTarget)
+    const username = formData.get("username") as string
+    const password = formData.get("password") as string
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+        credentials: 'include', // Important: This ensures cookies are sent and stored
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Force a hard navigation to ensure cookies are properly set
+        window.location.href = '/dashboard';
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.error?.message || "Invalid credentials",
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error instanceof Error ? error.message : "Login failed",
+      });
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -74,7 +103,7 @@ export default function LoginPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form action={onSubmit} className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
                 <Input
@@ -83,6 +112,7 @@ export default function LoginPage() {
                   placeholder="Enter your username"
                   required
                   className="w-full"
+                  disabled={isLoading}
                 />
               </div>
               <div className="space-y-2">
@@ -94,10 +124,11 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                   required
                   className="w-full"
+                  disabled={isLoading}
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Sign In
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           </CardContent>
