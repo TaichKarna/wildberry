@@ -1,52 +1,53 @@
 Join our Discord community:  
 <a href="https://discord.gg/7vCkqfyn"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a> 
 
-# Project Wildberry
+# Wildberry
+
 
 <img src="https://i.imgur.com/Hdt9TXr.png">
 
-**Wildberry** is an open-source, privacy-focused alternative to revenuecat with zero vendor lock-in for in-app purchases and subscriptions management. 
+A modern, feature-rich admin dashboard built with Next.js 13, TypeScript, and Tailwind CSS.
+
+## Dashboard Preview
+
+![Wildberry Admin Dashboard](./wildberry/front-end/Dashboard.png)
+
+## Project Structure
+
+```
+wildberry/
+├── front-end/              # Next.js admin dashboard
+│   ├── src/               # Source code
+│   │   ├── app/          # Next.js app directory
+│   │   ├── components/   # React components
+│   │   └── styles/       # Global styles
+│   ├── public/           # Static assets
+│   └── README.md         # Front-end documentation
+└── README.md             # Main project documentation
+```
+
+## Getting Started
+
+Please refer to the [front-end README](./wildberry/front-end/README.md) for detailed installation and setup instructions.
 
 ## Features
 
-- **No Vendor Lock-in**: Take control of your data and your business.
-- **Privacy First**: We respect user privacy with no data sharing or tracking.
-- **Flexible Integration**: Easy to integrate with various platforms and payment gateways.
-- **Open Source**: Transparency and community contributions are welcome.
+- **Modern Tech Stack**: Built with Next.js 13, TypeScript, and Tailwind CSS
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Dark/Light Mode**: Built-in theme support
+- **Authentication**: Secure login system
+- **Dashboard Features**:
+  - Apps Management
+  - Product Catalog
+  - Entitlements
+  - Offerings
+  - API Keys Management
+  - Audit Logs
+  - General Settings
 
-## Why Wildberry?
+## License
 
-- **Freedom**: Escape from the constraints of proprietary systems.
-- **Cost-Effective**: Reduce your expenses by leveraging community-driven development.
-- **Customizability**: Tailor the system to your exact needs without waiting on a third-party.
-
-## Installation
-
-### Prerequisites
-
-- Node.js (version x.x.x or higher)
-- 1gb ram 2vcpu
-
-### Steps
-
-1. **Clone the Repository**:
-   ```sh
-   git clone https://github.com/yourusername/wildberry.git
-   cd wildberry
-   ```
-
-2. **Install Dependencies**:
-   ```sh
-   npm install
-   ```
-   
-3. **Configure Your Environment**:
-Copy .env.example to .env and update the variables according to your setup.
-
-4. **Run the Server**:
-   ```sh
-   npm start
-   ```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 We welcome contributions! Here’s how you can contribute:
@@ -55,9 +56,6 @@ Report bugs or suggest features by opening an issue.
 Improve documentation or write code by forking the project and submitting a pull request.
 
 Please read our Contribution Guidelines (CONTRIBUTING.md) before making changes.
-
-## License
-Wildberry is licensed under the MIT License (LICENSE).
 
 ## Acknowledgements
 Inspired by the need for freedom in app monetization.
