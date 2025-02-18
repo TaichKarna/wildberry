@@ -10,7 +10,7 @@ A modern, feature-rich admin dashboard built with Next.js 13, TypeScript, and Ta
 
 ## Dashboard Preview
 
-![Wildberry Admin Dashboard](./wildberry/front-end/Dashboard.png)
+![Wildberry Admin Dashboard](./front-end/Dashboard.png)
 
 ## Project Structure
 
