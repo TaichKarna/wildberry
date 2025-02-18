@@ -3,9 +3,15 @@ Join our Discord community:
 
 # Wildberry
 
+<img src="https://i.imgur.com/Hdt9TXr.png">
+
+
 A comprehensive in-app purchase and subscription management system with a modern React frontend and robust TypeScript backend.
 
 ## Overview
+
+<img src="front-end/Dashboard.png">
+
 
 Wildberry provides a complete solution for managing in-app purchases, subscriptions, and entitlements. It includes:
 
