@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgres://wildberry:wildberry@postgres:5432/wildberry
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - wildberry-network
+
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=wildberry
+      - POSTGRES_PASSWORD=wildberry
+      - POSTGRES_DB=wildberry
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./src/database/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wildberry"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - wildberry-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@wildberry.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - postgres
+    networks:
+      - wildberry-network
+
+volumes:
+  postgres-data:
+
+networks:
+  wildberry-network:
+    driver: bridge
