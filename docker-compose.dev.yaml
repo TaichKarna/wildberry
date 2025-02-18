@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+      target: development
+    command: npm run dev
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://backend:3000
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - wildberry-network
+
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+      target: development
+    command: npm run dev
+    ports:
+      - "3000:3000"
+      - "9229:9229" # For debugging
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgres://wildberry:wildberry@postgres:5432/wildberry
+    volumes:
+      - ./back-end:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - wildberry-network
+
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=wildberry
+      - POSTGRES_PASSWORD=wildberry
+      - POSTGRES_DB=wildberry
+    volumes:
+      - postgres-dev-data:/var/lib/postgresql/data
+      - ./back-end/src/database/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wildberry"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - wildberry-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@wildberry.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - postgres
+    networks:
+      - wildberry-network
+
+volumes:
+  postgres-dev-data:
+
+networks:
+  wildberry-network:
+    driver: bridge
