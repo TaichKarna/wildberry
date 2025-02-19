@@ -1,5 +1,5 @@
 Join our Discord community:  
-<a href="https://discord.gg/7vCkqfyn"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a> 
+<a href="https://discord.gg/TfXNmjN54b"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a> 
 
 # Wildberry
 
