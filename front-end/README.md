@@ -1,3 +1,6 @@
+Join our Discord community:  
+<a href="https://discord.gg/TfXNmjN54b"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a> 
+
 # Wildberry Admin Dashboard
 
 A modern, feature-rich admin dashboard built with Next.js 13, TypeScript, and Tailwind CSS.

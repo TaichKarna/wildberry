@@ -1,3 +1,6 @@
+Join our Discord community:  
+<a href="https://discord.gg/TfXNmjN54b"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a> 
+
 # Wildberry Backend
 
 A comprehensive backend system for managing in-app purchases, subscriptions, and entitlements. Built with TypeScript, Express, and PostgreSQL.
