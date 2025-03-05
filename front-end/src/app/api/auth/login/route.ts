@@ -1,89 +1,43 @@
 import { NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
 export async function POST(req: Request) {
   try {
-    const { username, password } = await req.json();
+    const body = await req.json();
+    const backendUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api/v1';
+    const response = await fetch(`${backendUrl}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
 
-    if (
-      username === process.env.ADMIN_USERNAME &&
-      password === process.env.ADMIN_PASSWORD
-    ) {
-      // Create JWT token
-      const token = jwt.sign(
-        {
-          sub: username,
-          role: 'admin',
-        },
-        process.env.NEXTAUTH_SECRET as string,
-        {
-          expiresIn: '1h',
-        }
-      );
+    const data = await response.json();
 
-      // Create refresh token
-      const refreshToken = jwt.sign(
-        {
-          sub: username,
-          type: 'refresh',
-        },
-        process.env.NEXTAUTH_SECRET as string,
-        {
-          expiresIn: '7d',
-        }
-      );
-
-      const response = NextResponse.json({
-        success: true,
-        data: {
-          user: {
-            username,
-            role: 'admin',
-          },
-        },
-      });
-
-      // Set cookies
-      response.cookies.set('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        maxAge: 3600, // 1 hour
-      });
-
-      response.cookies.set('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        maxAge: 604800, // 7 days
-      });
-
-      return response;
+    if (!response.ok) {
+      return NextResponse.json(data, { status: response.status });
     }
 
-    return NextResponse.json(
-      {
-        success: false,
-        error: {
-          code: 'INVALID_CREDENTIALS',
-          message: 'Invalid username or password',
-        },
-      },
-      { status: 401 }
-    );
+    const responseCookies = NextResponse.json(data);
+    responseCookies.cookies.set('token', data.data.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 3600, // 1 hour
+    });
+    responseCookies.cookies.set('refreshToken', data.data.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 604800, // 7 days
+    });
+
+    return responseCookies;
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('Login proxy error:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: {
-          code: 'SERVER_ERROR',
-          message: 'An error occurred during login',
-        },
-      },
+      { success: false, error: { code: 'SERVER_ERROR', message: 'Login failed' } },
       { status: 500 }
     );
   }

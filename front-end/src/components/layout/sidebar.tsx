@@ -29,8 +29,13 @@ export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname()
   const [isCollapsed, setIsCollapsed] = useState(false)
 
-  const handleLogout = () => {
-    window.location.href = "/login"
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      window.location.href = "/login"
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   }
 
   return (
