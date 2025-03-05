@@ -24,6 +24,10 @@ const envSchema = z.object({
   TOKEN_AUDIENCE: z.string().default('your-audience'),
   LOG_DIR: z.string().default('../logs'),
   DATABASE_URL: z.string().optional(),
+  APPLE_PRIVATE_KEY: z.string().optional(),
+  APPLE_KEY_ID: z.string().optional(),
+  APPLE_ISSUER_ID: z.string().optional(),
+  APPLE_BUNDLE_ID: z.string().optional(),
 });
 
 const env = envSchema.parse(process.env);
@@ -66,3 +70,10 @@ export const tokenInfo = {
 
 export const logDirectory = env.LOG_DIR;
 export const databaseUrl = finalDatabaseUrl;
+
+export const appleConfig = {
+  privateKey: env.APPLE_PRIVATE_KEY || '',
+  keyId: env.APPLE_KEY_ID || '',
+  issuerId: env.APPLE_ISSUER_ID || '',
+  bundleId: env.APPLE_BUNDLE_ID || '',
+};

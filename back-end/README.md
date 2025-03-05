@@ -42,6 +42,12 @@ A comprehensive backend system for managing in-app purchases, subscriptions, and
   - Security event logging
   - Change history
 
+- 🍎 App Store Integration
+  - Apple App Store Server API support
+  - Subscription status management
+  - Transaction history retrieval
+  - Server-to-server notifications
+
 ## Prerequisites
 
 - Node.js >= 16
@@ -92,6 +98,7 @@ npm run test:coverage
 ## Documentation
 
 - [API Documentation](./docs/api.md)
+- [Apple Integration](./docs/apple-integration.md)
 - [Contributing Guidelines](./CONTRIBUTING.md)
 
 ## License
