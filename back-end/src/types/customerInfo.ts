@@ -58,3 +58,5 @@ export interface CustomerInfo {
     managementURL: string | null;
     nonSubscriptionTransactions: PurchasesStoreTransaction[];
 }
+
+export { VERIFICATION_RESULT };

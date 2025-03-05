@@ -1,8 +1,10 @@
+import { PurchasesEntitlementInfo, VERIFICATION_RESULT } from './customerInfo';
+
 export interface CustomerInfo {
     entitlements: {
-        all: Record<string, unknown>;
-        active: Record<string, unknown>;
-        verification: string;
+        all: { [key: string]: PurchasesEntitlementInfo };
+        active: { [key: string]: PurchasesEntitlementInfo };
+        verification: VERIFICATION_RESULT;
     };
     activeSubscriptions: string[];
     allPurchasedProductIdentifiers: string[];
@@ -15,7 +17,7 @@ export interface CustomerInfo {
     originalApplicationVersion: string | null;
     originalPurchaseDate: string | null;
     managementURL: string | null;
-    nonSubscriptionTransactions: any[];
+    nonSubscriptionTransactions: Transaction[];
 }
 
 export interface PurchasesOfferings {
