@@ -13,50 +13,9 @@ class ApiError extends Error {
 
 class ApiClient {
   private baseUrl: string;
-  private accessToken: string | null = null;
-  private refreshToken: string | null = null;
-  private refreshPromise: Promise<void> | null = null;
 
-  constructor(baseUrl: string = '/api/v1') {
+  constructor(baseUrl: string = process.env.NEXT_PUBLIC_API_BASE_URL || '/api/v1') {
     this.baseUrl = baseUrl;
-  }
-
-  setTokens(accessToken: string, refreshToken: string) {
-    this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
-    localStorage.setItem('refreshToken', refreshToken);
-  }
-
-  clearTokens() {
-    this.accessToken = null;
-    this.refreshToken = null;
-    localStorage.removeItem('refreshToken');
-  }
-
-  private async refreshAccessToken() {
-    if (!this.refreshToken) {
-      throw new ApiError('AUTH_ERROR', 'No refresh token available');
-    }
-
-    try {
-      const response = await fetch(`${this.baseUrl}/auth/refresh`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refreshToken: this.refreshToken }),
-      });
-
-      if (!response.ok) {
-        throw new ApiError('AUTH_ERROR', 'Failed to refresh token');
-      }
-
-      const data = await response.json();
-      this.setTokens(data.accessToken, data.refreshToken);
-    } catch (error) {
-      this.clearTokens();
-      throw error;
-    }
   }
 
   private async fetch<T>(
@@ -66,10 +25,6 @@ class ApiClient {
     const url = `${this.baseUrl}${endpoint}`;
     const headers = new Headers(options.headers);
 
-    if (this.accessToken) {
-      headers.set('Authorization', `Bearer ${this.accessToken}`);
-    }
-
     if (!headers.has('Content-Type')) {
       headers.set('Content-Type', 'application/json');
     }
@@ -78,20 +33,8 @@ class ApiClient {
       const response = await fetch(url, {
         ...options,
         headers,
+        credentials: 'include', // Send cookies with requests
       });
-
-      if (response.status === 401) {
-        // Token expired, try to refresh
-        if (!this.refreshPromise) {
-          this.refreshPromise = this.refreshAccessToken();
-        }
-
-        await this.refreshPromise;
-        this.refreshPromise = null;
-
-        // Retry the original request
-        return this.fetch(endpoint, options);
-      }
 
       const data: ApiResponse<T> = await response.json();
 
@@ -114,34 +57,20 @@ class ApiClient {
 
   // Auth endpoints
   async login(username: string, password: string) {
-    const response = await this.fetch<{ accessToken: string; refreshToken: string }>(
-      '/auth/login',
-      {
-        method: 'POST',
-        body: JSON.stringify({ username, password }),
-      }
-    );
-
-    if (response.data) {
-      this.setTokens(response.data.accessToken, response.data.refreshToken);
-    }
-
-    return response;
+    return this.fetch('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+    });
   }
 
   async logout() {
-    await this.fetch('/auth/logout', { method: 'POST' });
-    this.clearTokens();
+    return this.fetch('/auth/logout', { method: 'POST' });
   }
 
   // Apps endpoints
   async getApps(params?: { page?: number; limit?: number; search?: string }) {
-    return this.fetch('/admin/apps', {
-      method: 'GET',
-      ...(params && {
-        body: JSON.stringify(params),
-      }),
-    });
+    const query = params ? new URLSearchParams(params as any).toString() : '';
+    return this.fetch(`/apps${query ? `?${query}` : ''}`, { method: 'GET' });
   }
 
   async createApp(data: {
@@ -150,7 +79,7 @@ class ApiClient {
     platform: 'ios' | 'android' | 'web';
     description?: string;
   }) {
-    return this.fetch('/admin/apps', {
+    return this.fetch('/apps', {
       method: 'POST',
       body: JSON.stringify(data),
     });
@@ -158,11 +87,59 @@ class ApiClient {
 
   // Products endpoints
   async getProducts(params?: { page?: number; limit?: number; appId?: string }) {
-    return this.fetch('/admin/products', {
-      method: 'GET',
-      ...(params && {
-        body: JSON.stringify(params),
-      }),
+    const query = params ? new URLSearchParams(params as any).toString() : '';
+    return this.fetch(`/products${query ? `?${query}` : ''}`, { method: 'GET' });
+  }
+
+  async createProduct(data: { 
+    name: string; 
+    appId: string; 
+    type: 'subscription' | 'one_time'; 
+    price: number; 
+    currency: string; 
+    interval?: string; 
+    description?: string 
+  }) {
+    return this.fetch('/products', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  // Entitlements endpoints
+  async getEntitlements(params?: { page?: number; limit?: number; appId?: string }) {
+    const query = params ? new URLSearchParams(params as any).toString() : '';
+    return this.fetch(`/entitlements${query ? `?${query}` : ''}`, { method: 'GET' });
+  }
+
+  async createEntitlement(data: { 
+    name: string; 
+    appId: string; 
+    description?: string; 
+    features: string[] 
+  }) {
+    return this.fetch('/entitlements', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  // Offerings endpoints
+  async getOfferings(params?: { page?: number; limit?: number; appId?: string }) {
+    const query = params ? new URLSearchParams(params as any).toString() : '';
+    return this.fetch(`/offerings${query ? `?${query}` : ''}`, { method: 'GET' });
+  }
+
+  async createOffering(data: { 
+    name: string; 
+    appId: string; 
+    description?: string; 
+    products: string[]; 
+    entitlements: string[] 
+  }) {
+    return this.fetch('/offerings', {
+      method: 'POST',
+      body: JSON.stringify(data),
     });
   }
 
@@ -173,14 +150,14 @@ class ApiClient {
     permissions: string[];
     expiresIn?: string;
   }) {
-    return this.fetch(`/admin/api-keys/${data.type}`, {
+    return this.fetch(`/api-keys/${data.type}`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
   async revokeApiKey(keyId: string) {
-    return this.fetch(`/admin/api-keys/${keyId}`, {
+    return this.fetch(`/api-keys/${keyId}`, {
       method: 'DELETE',
     });
   }
@@ -191,10 +168,13 @@ class ApiClient {
     endDate: string;
     appId?: string;
   }) {
-    return this.fetch('/admin/analytics/overview', {
-      method: 'GET',
-      body: JSON.stringify(params),
-    });
+    const query = new URLSearchParams(params as any).toString();
+    return this.fetch(`/analytics/overview?${query}`, { method: 'GET' });
+  }
+
+  async getRecentSales(params?: { limit?: number }) {
+    const query = params ? new URLSearchParams(params as any).toString() : '';
+    return this.fetch(`/analytics/recent-sales${query ? `?${query}` : ''}`, { method: 'GET' });
   }
 }
 

@@ -27,7 +27,39 @@ interface AnalyticsData {
   };
 }
 
-export function Overview() {
+interface OverviewProps {
+  data: Array<{ date: string; amount: number }>;
+  currency: string;
+}
+
+export function Overview({ data, currency }: OverviewProps) {
+  return (
+    <ResponsiveContainer width="100%" height={350}>
+      <BarChart data={data}>
+        <XAxis
+          dataKey="date"
+          stroke="#888888"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+          tickFormatter={(value) => new Date(value).toLocaleDateString()}
+        />
+        <YAxis
+          stroke="#888888"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+          tickFormatter={(value) =>
+            new Intl.NumberFormat('en-US', { style: 'currency', currency, notation: 'compact' }).format(value)
+          }
+        />
+        <Bar dataKey="amount" fill="currentColor" radius={[4, 4, 0, 0]} className="fill-primary" />
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
+
+export function OverviewPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [timeframe, setTimeframe] = useState<'7d' | '30d' | '90d'>('30d');
@@ -148,32 +180,8 @@ export function Overview() {
             </CardContent>
           </Card>
         </div>
-        <div className="mt-4 h-[200px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data.revenue.data}>
-              <XAxis
-                dataKey="date"
-                tickFormatter={(value) => new Date(value).toLocaleDateString()}
-                fontSize={12}
-              />
-              <YAxis
-                fontSize={12}
-                tickFormatter={(value) =>
-                  new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: data.revenue.currency,
-                    notation: 'compact',
-                  }).format(value)
-                }
-              />
-              <Bar
-                dataKey="amount"
-                fill="currentColor"
-                radius={[4, 4, 0, 0]}
-                className="fill-primary"
-              />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="mt-4">
+          <Overview data={data.revenue.data} currency={data.revenue.currency} />
         </div>
       </CardContent>
     </Card>
