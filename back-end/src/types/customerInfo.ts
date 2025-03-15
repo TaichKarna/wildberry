@@ -1,5 +1,9 @@
-import { VERIFICATION_RESULT } from './enums';
+import { VERIFICATION_RESULT } from 'wildberry-types';
 
+// Re-export the types from wildberry-types
+export { VERIFICATION_RESULT };
+
+// Keep the local interface definitions for compatibility
 export interface PurchasesEntitlementInfo {
     identifier: string;
     isActive: boolean;
@@ -58,5 +62,3 @@ export interface CustomerInfo {
     managementURL: string | null;
     nonSubscriptionTransactions: PurchasesStoreTransaction[];
 }
-
-export { VERIFICATION_RESULT };

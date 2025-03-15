@@ -67,9 +67,5 @@ export enum PRORATION_MODE {
     IMMEDIATE_AND_CHARGE_FULL_PRICE = 5
 }
 
-export enum VERIFICATION_RESULT {
-    NOT_REQUESTED = "NOT_REQUESTED",
-    VERIFIED = "VERIFIED",
-    FAILED = "FAILED",
-    VERIFIED_ON_DEVICE = "VERIFIED_ON_DEVICE"
-}
+// Import VERIFICATION_RESULT from wildberry-types instead of defining it here
+export { VERIFICATION_RESULT } from 'wildberry-types';

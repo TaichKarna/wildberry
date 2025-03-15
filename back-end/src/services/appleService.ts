@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { generateAppleJWT } from '../utils/appleAuth';
 import { verifyJWS } from '../utils/jwsVerify';
+import { VERIFICATION_RESULT } from 'wildberry-types';
 import { CustomerInfo } from '../types/wildberry.types';
-import { VERIFICATION_RESULT } from '../types/enums';
 import { appleConfig } from '../config';
 
 const APPLE_API_BASE_URL = 'https://api.storekit.itunes.apple.com';

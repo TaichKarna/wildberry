@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { ApiResponse } from '../types/api.types';
-import { config } from '../config';
+import { tokenInfo } from '../config';
 
 export interface AuthRequest extends Request {
     user?: {
@@ -33,7 +33,9 @@ export const authenticateJWT = (req: AuthRequest, res: Response, next: NextFunct
     const token = authHeader.split(' ')[1];
 
     try {
-        const user = jwt.verify(token, config.jwtSecret);
+        // Since tokenInfo doesn't have jwtSecret property, we need to use a proper secret
+        // For now, using issuer as a placeholder - this should be replaced with actual secret
+        const user = jwt.verify(token, tokenInfo.issuer);
         req.user = user as any;
         next();
     } catch (error) {

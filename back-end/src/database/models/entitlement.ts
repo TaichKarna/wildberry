@@ -1,5 +1,6 @@
 import { query } from '..';
 import { Entitlement, PaginationQuery } from '../../types/api.types';
+import { getRow, getRows } from '../utils';
 
 export async function createEntitlement(entitlement: Omit<Entitlement, 'id' | 'createdAt' | 'updatedAt'>): Promise<Entitlement> {
     const result = await query(
@@ -13,7 +14,7 @@ export async function createEntitlement(entitlement: Omit<Entitlement, 'id' | 'c
             entitlement.features
         ]
     );
-    return mapEntitlementFromDb(result.rows[0]);
+    return mapEntitlementFromDb(getRow(result));
 }
 
 export async function getEntitlement(id: string): Promise<Entitlement | null> {
@@ -21,7 +22,7 @@ export async function getEntitlement(id: string): Promise<Entitlement | null> {
         'SELECT * FROM entitlements WHERE id = $1',
         [id]
     );
-    return result.rows.length > 0 ? mapEntitlementFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapEntitlementFromDb(getRow(result)) : null;
 }
 
 export async function listEntitlements(params: PaginationQuery & { appId?: string } = {}): Promise<{ entitlements: Entitlement[], total: number }> {
@@ -58,8 +59,8 @@ export async function listEntitlements(params: PaginationQuery & { appId?: strin
     const countResult = await query(countQuery, queryParams.slice(0, -2));
 
     return {
-        entitlements: result.rows.map(mapEntitlementFromDb),
-        total: parseInt(countResult.rows[0].count)
+        entitlements: getRows(result).map(mapEntitlementFromDb),
+        total: parseInt(getRow(countResult).count)
     };
 }
 
@@ -91,7 +92,7 @@ export async function updateEntitlement(id: string, entitlement: Partial<Entitle
         queryParams
     );
 
-    return result.rows.length > 0 ? mapEntitlementFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapEntitlementFromDb(getRow(result)) : null;
 }
 
 export async function deleteEntitlement(id: string): Promise<boolean> {
@@ -99,7 +100,7 @@ export async function deleteEntitlement(id: string): Promise<boolean> {
         'DELETE FROM entitlements WHERE id = $1 RETURNING id',
         [id]
     );
-    return result.rows.length > 0;
+    return getRow(result) !== null;
 }
 
 function mapEntitlementFromDb(row: any): Entitlement {

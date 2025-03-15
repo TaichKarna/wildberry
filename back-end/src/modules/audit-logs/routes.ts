@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authenticateJWT, requirePermission } from '../../middleware/auth.middleware';
 import { listAuditLogs, getAuditLog } from '../../database/models/auditLog';
 import { ApiResponse } from '../../types/api.types';
+import { query } from '../../database';
 
 const router = Router();
 

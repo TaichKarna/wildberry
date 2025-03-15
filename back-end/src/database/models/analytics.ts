@@ -1,5 +1,6 @@
 import { query } from '..';
 import { DateRangeQuery, AnalyticsQuery } from '../../types/api.types';
+import { getRow, getRows } from '../utils';
 
 export interface OverviewStats {
     totalRevenue: number;
@@ -80,12 +81,12 @@ export async function getOverviewStats(params: DateRangeQuery): Promise<Overview
     );
 
     return {
-        totalRevenue: parseFloat(revenueResult.rows[0].total_revenue),
-        activeSubscriptions: parseInt(subscriptionResult.rows[0].active_subscriptions),
-        newCustomers: parseInt(subscriptionResult.rows[0].new_customers),
-        churnRate: parseFloat(subscriptionResult.rows[0].churn_rate),
-        mrr: parseFloat(recurringResult.rows[0].mrr),
-        arr: parseFloat(recurringResult.rows[0].mrr) * 12
+        totalRevenue: parseFloat(getRow(revenueResult).total_revenue),
+        activeSubscriptions: parseInt(getRow(subscriptionResult).active_subscriptions),
+        newCustomers: parseInt(getRow(subscriptionResult).new_customers),
+        churnRate: parseFloat(getRow(subscriptionResult).churn_rate),
+        mrr: parseFloat(getRow(recurringResult).mrr),
+        arr: parseFloat(getRow(recurringResult).mrr) * 12
     };
 }
 
@@ -123,7 +124,7 @@ export async function getRevenueMetrics(params: AnalyticsQuery): Promise<Revenue
         queryParams
     );
 
-    return result.rows.map(row => ({
+    return getRows(result).map(row => ({
         date: row.date,
         revenue: parseFloat(row.revenue),
         subscriptions: parseInt(row.subscriptions),
@@ -169,13 +170,13 @@ export async function getSubscriptionMetrics(params: DateRangeQuery): Promise<Su
     );
 
     return {
-        totalSubscribers: parseInt(result.rows[0].total_subscribers),
-        activeSubscribers: parseInt(result.rows[0].active_subscribers),
-        churned: parseInt(result.rows[0].churned),
-        recovered: parseInt(result.rows[0].recovered),
-        upgrades: parseInt(result.rows[0].upgrades),
-        downgrades: parseInt(result.rows[0].downgrades),
-        averageRevenue: parseFloat(result.rows[0].average_revenue),
-        lifetimeValue: parseFloat(result.rows[0].lifetime_value)
+        totalSubscribers: parseInt(getRow(result).total_subscribers),
+        activeSubscribers: parseInt(getRow(result).active_subscribers),
+        churned: parseInt(getRow(result).churned),
+        recovered: parseInt(getRow(result).recovered),
+        upgrades: parseInt(getRow(result).upgrades),
+        downgrades: parseInt(getRow(result).downgrades),
+        averageRevenue: parseFloat(getRow(result).average_revenue),
+        lifetimeValue: parseFloat(getRow(result).lifetime_value)
     };
 }
