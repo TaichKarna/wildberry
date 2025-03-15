@@ -1,5 +1,6 @@
 import { query } from '..';
 import { Product, PaginationQuery } from '../../types/api.types';
+import { getRow, getRows } from '../utils';
 
 export async function createProduct(product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>): Promise<Product> {
     const result = await query(
@@ -17,7 +18,7 @@ export async function createProduct(product: Omit<Product, 'id' | 'createdAt' | 
             product.status
         ]
     );
-    return mapProductFromDb(result.rows[0]);
+    return mapProductFromDb(getRow(result));
 }
 
 export async function getProduct(id: string): Promise<Product | null> {
@@ -25,7 +26,7 @@ export async function getProduct(id: string): Promise<Product | null> {
         'SELECT * FROM products WHERE id = $1',
         [id]
     );
-    return result.rows.length > 0 ? mapProductFromDb(result.rows[0]) : null;
+    return getRows(result).length > 0 ? mapProductFromDb(getRow(result)) : null;
 }
 
 export async function listProducts(params: PaginationQuery & { appId?: string } = {}): Promise<{ products: Product[], total: number }> {
@@ -62,8 +63,8 @@ export async function listProducts(params: PaginationQuery & { appId?: string } 
     const countResult = await query(countQuery, queryParams.slice(0, -2));
 
     return {
-        products: result.rows.map(mapProductFromDb),
-        total: parseInt(countResult.rows[0].count)
+        products: getRows(result).map(mapProductFromDb),
+        total: parseInt(getRow(countResult).count)
     };
 }
 
@@ -103,7 +104,7 @@ export async function updateProduct(id: string, product: Partial<Product>): Prom
         queryParams
     );
 
-    return result.rows.length > 0 ? mapProductFromDb(result.rows[0]) : null;
+    return getRows(result).length > 0 ? mapProductFromDb(getRow(result)) : null;
 }
 
 export async function deleteProduct(id: string): Promise<boolean> {
@@ -111,7 +112,7 @@ export async function deleteProduct(id: string): Promise<boolean> {
         'DELETE FROM products WHERE id = $1 RETURNING id',
         [id]
     );
-    return result.rows.length > 0;
+    return getRows(result).length > 0;
 }
 
 function mapProductFromDb(row: any): Product {

@@ -1,6 +1,7 @@
 import { query } from '..';
 import { ApiKeyResponse, CreateApiKeyRequest, PaginationQuery } from '../../types/api.types';
 import crypto from 'crypto';
+import { getRow, getRows } from '../utils';
 
 function generateApiKey(type: 'public' | 'private'): string {
     const prefix = type === 'public' ? 'pub_' : 'priv_';
@@ -21,7 +22,7 @@ export async function createApiKey(request: CreateApiKeyRequest & { type: 'publi
         [keyValue, request.name, request.appId, request.type, request.permissions]
     );
 
-    return mapApiKeyFromDb(result.rows[0]);
+    return mapApiKeyFromDb(getRow(result));
 }
 
 export async function getApiKey(id: string): Promise<ApiKeyResponse | null> {
@@ -29,7 +30,7 @@ export async function getApiKey(id: string): Promise<ApiKeyResponse | null> {
         'SELECT * FROM api_keys WHERE id = $1',
         [id]
     );
-    return result.rows.length > 0 ? mapApiKeyFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapApiKeyFromDb(getRow(result)) : null;
 }
 
 export async function validateApiKey(keyValue: string): Promise<ApiKeyResponse | null> {
@@ -41,15 +42,17 @@ export async function validateApiKey(keyValue: string): Promise<ApiKeyResponse |
         [keyValue]
     );
 
-    if (result.rows.length === 0) return null;
+    if (getRow(result)) {
+        // Update last used timestamp
+        await query(
+            'UPDATE api_keys SET last_used = NOW() WHERE id = $1',
+            [getRow(result).id]
+        );
 
-    // Update last used timestamp
-    await query(
-        'UPDATE api_keys SET last_used = NOW() WHERE id = $1',
-        [result.rows[0].id]
-    );
+        return mapApiKeyFromDb(getRow(result));
+    }
 
-    return mapApiKeyFromDb(result.rows[0]);
+    return null;
 }
 
 export async function listApiKeys(params: PaginationQuery & { 
@@ -94,8 +97,8 @@ export async function listApiKeys(params: PaginationQuery & {
     const countResult = await query(countQuery, queryParams.slice(0, -2));
 
     return {
-        keys: result.rows.map(mapApiKeyFromDb),
-        total: parseInt(countResult.rows[0].count)
+        keys: getRows(result).map(mapApiKeyFromDb),
+        total: parseInt(getRow(countResult).count)
     };
 }
 
@@ -131,7 +134,7 @@ export async function updateApiKey(id: string, updates: {
         queryParams
     );
 
-    return result.rows.length > 0 ? mapApiKeyFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapApiKeyFromDb(getRow(result)) : null;
 }
 
 export async function rotateApiKey(id: string): Promise<ApiKeyResponse | null> {
@@ -146,7 +149,7 @@ export async function rotateApiKey(id: string): Promise<ApiKeyResponse | null> {
         [newKeyValue, id]
     );
 
-    return result.rows.length > 0 ? mapApiKeyFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapApiKeyFromDb(getRow(result)) : null;
 }
 
 export async function revokeApiKey(id: string): Promise<boolean> {
@@ -156,7 +159,7 @@ export async function revokeApiKey(id: string): Promise<boolean> {
          RETURNING id`,
         [id]
     );
-    return result.rows.length > 0;
+    return getRow(result) ? true : false;
 }
 
 function mapApiKeyFromDb(row: any): ApiKeyResponse {

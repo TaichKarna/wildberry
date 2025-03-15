@@ -1,5 +1,6 @@
 import { query } from '..';
 import { PaginationQuery } from '../../types/api.types';
+import { getRow, getRows } from '../utils';
 
 export interface AuditLogEntry {
     id: string;
@@ -41,7 +42,7 @@ export async function createAuditLog(entry: Omit<AuditLogEntry, 'id' | 'createdA
         ]
     );
 
-    return await enrichAuditLog(result.rows[0]);
+    return await enrichAuditLog(getRow(result));
 }
 
 export async function listAuditLogs(params: AuditLogQuery = {}): Promise<{ logs: AuditLogEntry[], total: number }> {
@@ -129,8 +130,8 @@ export async function listAuditLogs(params: AuditLogQuery = {}): Promise<{ logs:
     );
 
     return {
-        logs: result.rows.map(mapAuditLogFromDb),
-        total: parseInt(countResult.rows[0].count)
+        logs: getRows(result).map(mapAuditLogFromDb),
+        total: parseInt(getRow(countResult).count)
     };
 }
 
@@ -147,7 +148,7 @@ export async function getAuditLog(id: string): Promise<AuditLogEntry | null> {
         [id]
     );
 
-    return result.rows.length > 0 ? mapAuditLogFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapAuditLogFromDb(getRow(result)) : null;
 }
 
 async function enrichAuditLog(row: any): Promise<AuditLogEntry> {
@@ -158,8 +159,8 @@ async function enrichAuditLog(row: any): Promise<AuditLogEntry> {
             'SELECT username FROM users WHERE id = $1',
             [row.user_id]
         );
-        if (userResult.rows.length > 0) {
-            enriched.username = userResult.rows[0].username;
+        if (getRow(userResult)) {
+            enriched.username = getRow(userResult).username;
         }
     }
 
@@ -168,8 +169,8 @@ async function enrichAuditLog(row: any): Promise<AuditLogEntry> {
             'SELECT name FROM apps WHERE id = $1',
             [row.app_id]
         );
-        if (appResult.rows.length > 0) {
-            enriched.app_name = appResult.rows[0].name;
+        if (getRow(appResult)) {
+            enriched.app_name = getRow(appResult).name;
         }
     }
 

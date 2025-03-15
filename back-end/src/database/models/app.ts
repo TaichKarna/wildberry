@@ -1,5 +1,6 @@
 import { query } from '..';
 import { App, PaginationQuery } from '../../types/api.types';
+import { getRow, getRows } from '../utils';
 
 export async function createApp(app: Omit<App, 'id' | 'createdAt' | 'updatedAt'>): Promise<App> {
     const result = await query(
@@ -8,7 +9,7 @@ export async function createApp(app: Omit<App, 'id' | 'createdAt' | 'updatedAt'>
          RETURNING id, name, bundle_id, platform, description, status, created_at, updated_at`,
         [app.name, app.bundleId, app.platform, app.description, app.status]
     );
-    return mapAppFromDb(result.rows[0]);
+    return mapAppFromDb(getRow(result));
 }
 
 export async function getApp(id: string): Promise<App | null> {
@@ -16,7 +17,7 @@ export async function getApp(id: string): Promise<App | null> {
         'SELECT * FROM apps WHERE id = $1',
         [id]
     );
-    return result.rows.length > 0 ? mapAppFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapAppFromDb(getRow(result)) : null;
 }
 
 export async function listApps(params: PaginationQuery = {}): Promise<{ apps: App[], total: number }> {
@@ -41,8 +42,8 @@ export async function listApps(params: PaginationQuery = {}): Promise<{ apps: Ap
     );
 
     return {
-        apps: result.rows.map(mapAppFromDb),
-        total: parseInt(countResult.rows[0].count)
+        apps: getRows(result).map(mapAppFromDb),
+        total: parseInt(getRow(countResult).count)
     };
 }
 
@@ -74,7 +75,7 @@ export async function updateApp(id: string, app: Partial<App>): Promise<App | nu
         queryParams
     );
 
-    return result.rows.length > 0 ? mapAppFromDb(result.rows[0]) : null;
+    return getRow(result) ? mapAppFromDb(getRow(result)) : null;
 }
 
 export async function deleteApp(id: string): Promise<boolean> {
@@ -82,7 +83,7 @@ export async function deleteApp(id: string): Promise<boolean> {
         'DELETE FROM apps WHERE id = $1 RETURNING id',
         [id]
     );
-    return result.rows.length > 0;
+    return getRow(result) !== undefined;
 }
 
 function mapAppFromDb(row: any): App {
