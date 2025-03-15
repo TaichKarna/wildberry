@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && npm run serve",
     "serve": "node -r dotenv/config dist/src/server.js",
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsc && npm run copy-assets",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
     "watch-node": "nodemon -r dotenv/config dist/src/server.js",
     "watch-ts": "tsc -w",
@@ -19,7 +19,8 @@
     "format": "npm run lint && prettier \"src/**/*.{ts,js,json,md}\" --check",
     "format:fix": "npm run lint:fix && prettier \"src/**/*.{ts,js,json,md}\" --write",
     "upgrade": "npm update",
-    "upgrade-latest": "npx npm-check-updates -u && npm install"
+    "upgrade-latest": "npx npm-check-updates -u && npm install",
+    "copy-assets": "mkdir -p dist/src/database/migrations && cp src/database/migrations/*.sql dist/src/database/migrations/"
   },
   "keywords": [],
   "author": "",
