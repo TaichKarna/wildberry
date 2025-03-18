@@ -1,268 +1,85 @@
-Join our Discord community:  
-<a href="https://discord.gg/TfXNmjN54b"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a> 
-
 # Wildberry
 
-<img src="https://i.imgur.com/Hdt9TXr.png">
 
+<img src="https://i.imgur.com/Hdt9TXr.png" width="200">
 
-A comprehensive in-app purchase and subscription management system with a modern React frontend and robust TypeScript backend.
+A modern in-app purchase and subscription management system built with React and TypeScript.
+
+Join our community:  
+<a href="https://discord.gg/TfXNmjN54b"><img src="https://img.icons8.com/color/24/000000/discord-logo.png" alt="Discord Logo" /></a>
+
+---
+## Quick Start
+...
+### Deploy Instantly
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ProjWildBerry/wildberry)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/ProjWildBerry/wildberry)
 
 ## Overview
 
-<img src="front-end/Dashboard.png">
+<img src="front-end/Dashboard.png" width="600">
 
+Wildberry is your all-in-one solution for managing subscriptions and in-app purchases with ease. Featuring a sleek React frontend and a powerful TypeScript backend, it’s designed for developers who value simplicity and performance.
 
-Wildberry provides a complete solution for managing in-app purchases, subscriptions, and entitlements. It includes:
+---
 
-- **Frontend**: Modern React application with Material-UI
-- **Backend**: TypeScript-based API with PostgreSQL
-- **Authentication**: JWT-based auth with API key support
-- **Analytics**: Built-in subscription and revenue analytics
-- **Audit Logs**: Comprehensive activity tracking
+## Why Wildberry?
 
-## Getting Started
+| **Feature**          | **Wildberry**          | **Others**            |
+|----------------------|-----------------------|-----------------------|
+| Setup                | One-script install    | Complex multi-step    |
+| Frontend             | Modern React UI       | Outdated interfaces   |
+| Backend              | TypeScript + PostgreSQL | Unreliable stacks    |
+| Analytics            | Built-in insights     | Extra paid tools      |
+| Cost                 | Open-source (FREE)    | Expensive licenses    |
+
+---
+
+## Quick Start
 
 ### Prerequisites
+- Docker (recommended) or Node.js >= 16 + PostgreSQL >= 15
 
-- Node.js >= 16
-- PostgreSQL >= 15
-- npm or yarn
-
-### Docker Setup
-
-#### Development Environment
-
-Run the entire stack in development mode with hot-reloading:
+### One-Command Setup
+Run this single script to set up everything:
 
 ```bash
-docker compose -f docker-compose.dev.yaml up -d
+curl -sSL https://raw.githubusercontent.com/ProjWildBerry/wildberry/main/setup.sh | bash
 ```
 
-This will start:
-- Frontend: http://localhost:3001
-- Backend API: http://localhost:3000
-- pgAdmin: http://localhost:5050
-- PostgreSQL: localhost:5432
+This will:
+1. Clone the repository
+2. Set up environment variables
+3. Start all services with Docker
 
-#### Production Environment
+Access:
+- Frontend: `http://localhost:3001`
+- API: `http://localhost:3000`
+- pgAdmin: `http://localhost:5050`
 
-For production deployment:
-
-```bash
-docker compose up -d
-```
-
-#### Individual Service Management
-
-Start specific services:
-```bash
-# Start only backend services
-docker compose up -d backend postgres
-
-# Start only frontend
-docker compose up -d frontend
-
-# Start database management
-docker compose up -d postgres pgadmin
-```
-
-View logs:
-```bash
-# All services
-docker compose logs -f
-
-# Specific service
-docker compose logs -f frontend
-docker compose logs -f backend
-```
-
-Rebuild services:
-```bash
-# Rebuild all
-docker compose build
-
-# Rebuild specific service
-docker compose build frontend
-docker compose build backend
-```
-
-Stop services:
-```bash
-# Stop all
-docker compose down
-
-# Stop and remove volumes
-docker compose down -v
-```
-
-### Backend Setup
-
-1. Navigate to the backend directory:
-```bash
-cd back-end
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Set up environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your configuration
-```
-
-4. Start the development server:
-```bash
-# Using Docker (recommended)
-docker compose -f docker-compose.dev.yaml up -d
-
-# Without Docker
-npm run dev
-```
-
-The backend API will be available at:
-- API: http://localhost:3000
-- pgAdmin: http://localhost:5050 (when using Docker)
-- API Documentation: http://localhost:3000/docs
-
-### Frontend Setup
-
-1. Navigate to the frontend directory:
-```bash
-cd front-end
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Set up environment variables:
-```bash
-cp .env.example .env
-```
-
-4. Start the development server:
-```bash
-npm start
-```
-
-The frontend will be available at http://localhost:3001
+---
 
 ## Features
 
-### Backend Features
+- **Simple Setup**: Get started in minutes
+- **Subscription Management**: Handle products and entitlements effortlessly
+- **Analytics**: Track revenue and user behavior
+- **Secure**: JWT auth and API key support
+- **Beautiful UI**: Responsive, modern, and mobile-friendly
 
-- **Authentication & Authorization**
-  - JWT-based authentication
-  - API key management
-  - Role-based access control
+---
 
-- **App Management**
-  - Multiple app support
-  - Platform-specific configurations
-  - Bundle ID validation
+## Star History
 
-- **Product Management**
-  - Subscription and one-time purchase support
-  - Price and currency handling
-  - Product lifecycle management
+[![Star History Chart](https://api.star-history.com/svg?repos=ProjWildBerry/wildberry&type=Date)](https://www.star-history.com/#ProjWildBerry/wildberry&Date)
 
-- **Entitlements**
-  - Feature-based access control
-  - Flexible entitlement mapping
-  - Inheritance and grouping
+---
 
-- **Offerings**
-  - Product bundling
-  - Dynamic offering configuration
-  - A/B testing support
-
-- **Analytics**
-  - Revenue tracking
-  - Subscription metrics
-  - User behavior analytics
-
-- **Audit Logging**
-  - Comprehensive activity tracking
-  - Security event logging
-  - Change history
-
-### Frontend Features
-
-- **Modern UI/UX**
-  - Material-UI components
-  - Responsive design
-  - Dark mode support
-
-- **Dashboard**
-  - Revenue metrics
-  - Subscription analytics
-  - User activity tracking
-
-- **Management Interfaces**
-  - Product management
-  - Subscription handling
-  - User management
-
-- **Mobile-First Design**
-  - Responsive layouts
-  - Touch-friendly interfaces
-  - Adaptive components
-
-## Development
-
-### Running Tests
-
-Backend:
-```bash
-cd back-end
-npm test
-```
-
-Frontend:
-```bash
-cd front-end
-npm test
-```
-
-### API Documentation
-
-- [API Documentation](./back-end/docs/api.md)
-- [Architecture Documentation](./back-end/docs/architecture.md)
-
-### Contributing
-
-Please read our [Contributing Guidelines](./CONTRIBUTING.md) before submitting pull requests.
-
-## Deployment
-
-### Backend Deployment
-
-Using Docker:
-```bash
-cd back-end
-docker compose up -d
-```
-
-Manual deployment:
-```bash
-cd back-end
-npm run build
-npm start
-```
-
-### Frontend Deployment
-
-```bash
-cd front-end
-npm run build
-# Deploy the build directory to your hosting service
-```
+## Star History
+...
+[![Contributors](https://img.shields.io/github/contributors/ProjWildBerry/wildberry?style=flat-square)](https://github.com/ProjWildBerry/wildberry/graphs/contributors)
 
 ## License
 
-MIT License - see LICENSE file for details
+MIT License - see [LICENSE](./LICENSE) for details
+
