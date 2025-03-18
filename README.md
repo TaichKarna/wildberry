@@ -68,7 +68,7 @@ Access:
 ---
 
 ### Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=ProjWildBerry/wildberry&type=Date)](https://www.star-history.com/#ProjWildBerry/wildberry&Date)
+<img src="star-history-2025318.png" width="600">
 
 ### Contributors
 [![Contributors](https://img.shields.io/github/contributors/ProjWildBerry/wildberry?style=flat-square)](https://github.com/ProjWildBerry/wildberry/graphs/contributors)
