@@ -1,7 +1,7 @@
 # Wildberry
 
 
-<img src="https://i.imgur.com/Hdt9TXr.png" width="600">
+<img src="https://i.imgur.com/Hdt9TXr.png" width="800">
 
 A modern in-app purchase and subscription management system built with React and TypeScript.
 
@@ -18,7 +18,7 @@ Join our community:
 
 ## Overview
 
-<img src="front-end/Dashboard.png" width="600">
+<img src="front-end/Dashboard.png" width="800">
 
 Wildberry is your all-in-one solution for managing subscriptions and in-app purchases with ease. Featuring a sleek React frontend and a powerful TypeScript backend, it’s designed for developers who value simplicity and performance.
 
@@ -68,7 +68,7 @@ Access:
 ---
 
 ### Star History
-<img src="star-history-2025318.png" width="600">
+<img src="star-history-2025318.png" width="800">
 
 ### Contributors
 [![Contributors](https://img.shields.io/github/contributors/ProjWildBerry/wildberry?style=flat-square)](https://github.com/ProjWildBerry/wildberry/graphs/contributors)
