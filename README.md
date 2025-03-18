@@ -1,7 +1,7 @@
 # Wildberry
 
 
-<img src="https://i.imgur.com/Hdt9TXr.png" width="200">
+<img src="https://i.imgur.com/Hdt9TXr.png" width="600">
 
 A modern in-app purchase and subscription management system built with React and TypeScript.
 
@@ -10,7 +10,8 @@ Join our community:
 
 ---
 ## Quick Start
-...
+
+
 ### Deploy Instantly
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ProjWildBerry/wildberry)
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/ProjWildBerry/wildberry)
@@ -36,9 +37,6 @@ Wildberry is your all-in-one solution for managing subscriptions and in-app purc
 ---
 
 ## Quick Start
-
-### Prerequisites
-- Docker (recommended) or Node.js >= 16 + PostgreSQL >= 15
 
 ### One-Command Setup
 Run this single script to set up everything:
@@ -69,14 +67,10 @@ Access:
 
 ---
 
-## Star History
-
+### Star History
 [![Star History Chart](https://api.star-history.com/svg?repos=ProjWildBerry/wildberry&type=Date)](https://www.star-history.com/#ProjWildBerry/wildberry&Date)
 
----
-
-## Star History
-...
+### Contributors
 [![Contributors](https://img.shields.io/github/contributors/ProjWildBerry/wildberry?style=flat-square)](https://github.com/ProjWildBerry/wildberry/graphs/contributors)
 
 ## License
